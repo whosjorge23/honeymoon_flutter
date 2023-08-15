@@ -38,10 +38,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _listenController() => setState(() {});
 
-  List<String> _images = [
-    'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/10/2e/1e/cape-town.jpg?w=2400&h=-1&s=1',
-    'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/30/96/12/cape-to-grape-wine-tours.jpg?w=1200&h=-1&s=1',
-    'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/79/ab/1d/saffa-tours.jpg?w=1100&h=-1&s=1',
+  List<HoneymoonLocation> _honeymoonLocations = [
+    HoneymoonLocation(
+        title: "Cape Town 1",
+        imageUrl: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/10/2e/1e/cape-town.jpg?w=2400&h=-1&s=1'),
+    HoneymoonLocation(
+        title: "Cape Town 2",
+        imageUrl:
+            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/30/96/12/cape-to-grape-wine-tours.jpg?w=1200&h=-1&s=1'),
+    HoneymoonLocation(
+        title: "Cape Town 3",
+        imageUrl:
+            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/79/ab/1d/saffa-tours.jpg?w=1100&h=-1&s=1'),
   ];
 
   @override
@@ -88,13 +96,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   horizontalSwipeThreshold: 0.8,
                   verticalSwipeThreshold: 0.8,
                   builder: (context, properties) {
-                    final itemIndex = properties.index % _images.length;
+                    final itemIndex = properties.index % _honeymoonLocations.length;
 
                     return Stack(
                       children: [
                         ExampleCard(
-                          name: 'Sample No.${itemIndex + 1}',
-                          assetPath: _images[itemIndex],
+                          name: _honeymoonLocations[itemIndex].title,
+                          assetPath: _honeymoonLocations[itemIndex].imageUrl,
                         ),
                         // more custom overlay possible than with overlayBuilder
                         if (properties.stackIndex == 0 && properties.direction != null)
@@ -118,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () {
                           _controller.next(swipeDirection: SwipeDirection.left);
                         },
-                        child: Text("NOPE"),
+                        child: Text("NAY"),
                       ),
                     ),
                   ),
@@ -141,4 +149,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+class HoneymoonLocation {
+  final String title;
+  final String imageUrl;
+
+  HoneymoonLocation({
+    required this.title,
+    required this.imageUrl,
+  });
 }

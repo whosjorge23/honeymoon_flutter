@@ -25,7 +25,7 @@ class CardLabel extends StatelessWidget {
   factory CardLabel.left() {
     return const CardLabel._(
       color: SwipeDirectionColor.left,
-      label: 'NOPE',
+      label: 'NAY',
       angle: _labelAngle,
       alignment: Alignment.topRight,
     );
