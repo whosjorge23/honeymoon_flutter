@@ -9,6 +9,7 @@ class CardLabel extends StatelessWidget {
   const CardLabel._({
     required this.color,
     required this.label,
+    this.icon,
     required this.angle,
     required this.alignment,
   });
@@ -17,6 +18,7 @@ class CardLabel extends StatelessWidget {
     return const CardLabel._(
       color: SwipeDirectionColor.right,
       label: 'YAY',
+      icon: Icons.thumb_up_alt_rounded,
       angle: -_labelAngle,
       alignment: Alignment.topLeft,
     );
@@ -26,6 +28,7 @@ class CardLabel extends StatelessWidget {
     return const CardLabel._(
       color: SwipeDirectionColor.left,
       label: 'NAY',
+      icon: Icons.thumb_down_alt_rounded,
       angle: _labelAngle,
       alignment: Alignment.topRight,
     );
@@ -51,6 +54,7 @@ class CardLabel extends StatelessWidget {
 
   final Color color;
   final String label;
+  final IconData? icon;
   final double angle;
   final Alignment alignment;
 
@@ -74,14 +78,26 @@ class CardLabel extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
           ),
           padding: const EdgeInsets.all(6),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.4,
-              color: color,
-              height: 1,
+          child: Container(
+            width: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.4,
+                    color: color,
+                    height: 1,
+                  ),
+                ),
+                Icon(
+                  icon,
+                  color: color,
+                )
+              ],
             ),
           ),
         ),

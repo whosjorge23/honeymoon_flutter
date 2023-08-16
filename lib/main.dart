@@ -73,78 +73,88 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 6,
-              child: Container(
-                color: Colors.yellow,
-                child: SwipableStack(
-                  detectableSwipeDirections: const {
-                    SwipeDirection.right,
-                    SwipeDirection.left,
-                  },
-                  controller: _controller,
-                  stackClipBehaviour: Clip.none,
-                  onSwipeCompleted: (index, direction) {
-                    if (kDebugMode) {
-                      print('$index, $direction');
-                    }
-                  },
-                  horizontalSwipeThreshold: 0.8,
-                  verticalSwipeThreshold: 0.8,
-                  builder: (context, properties) {
-                    final itemIndex = properties.index % _honeymoonLocations.length;
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 6,
+                child: Container(
+                  // color: Colors.yellow,
+                  child: SwipableStack(
+                    detectableSwipeDirections: const {
+                      SwipeDirection.right,
+                      SwipeDirection.left,
+                    },
+                    controller: _controller,
+                    stackClipBehaviour: Clip.none,
+                    onSwipeCompleted: (index, direction) {
+                      if (kDebugMode) {
+                        print('$index, $direction');
+                      }
+                    },
+                    horizontalSwipeThreshold: 0.8,
+                    verticalSwipeThreshold: 0.8,
+                    builder: (context, properties) {
+                      final itemIndex = properties.index % _honeymoonLocations.length;
 
-                    return Stack(
-                      children: [
-                        ExampleCard(
-                          name: _honeymoonLocations[itemIndex].title,
-                          assetPath: _honeymoonLocations[itemIndex].imageUrl,
-                        ),
-                        // more custom overlay possible than with overlayBuilder
-                        if (properties.stackIndex == 0 && properties.direction != null)
-                          CardOverlay(
-                            swipeProgress: properties.swipeProgress,
-                            direction: properties.direction!,
-                          )
-                      ],
-                    );
-                  },
+                      return Stack(
+                        children: [
+                          ExampleCard(
+                            name: _honeymoonLocations[itemIndex].title,
+                            assetPath: _honeymoonLocations[itemIndex].imageUrl,
+                          ),
+                          // more custom overlay possible than with overlayBuilder
+                          if (properties.stackIndex == 0 && properties.direction != null)
+                            CardOverlay(
+                              swipeProgress: properties.swipeProgress,
+                              direction: properties.direction!,
+                            )
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      color: Colors.red,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _controller.next(swipeDirection: SwipeDirection.left);
-                        },
-                        child: Text("NAY"),
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        // color: Colors.red,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _controller.next(swipeDirection: SwipeDirection.left);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [Text("NAY"), SizedBox(width: 5), Icon(Icons.thumb_down_alt_rounded)],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.green,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _controller.next(swipeDirection: SwipeDirection.right);
-                        },
-                        child: Text("YAY"),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Container(
+                        // color: Colors.green,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _controller.next(swipeDirection: SwipeDirection.right);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [Text("YAY"), SizedBox(width: 5), Icon(Icons.thumb_up_alt_rounded)],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
