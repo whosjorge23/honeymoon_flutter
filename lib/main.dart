@@ -5,6 +5,7 @@ import 'package:honeymoon_flutter/widgets/example_card.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Honeymoon Flutter'),
@@ -80,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Expanded(
-                flex: 6,
+                flex: 8,
                 child: Container(
                   // color: Colors.yellow,
                   child: SwipableStack(
@@ -88,7 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       SwipeDirection.right,
                       SwipeDirection.left,
                     },
+                    allowVerticalSwipe: false,
                     controller: _controller,
+                    swipeAnchor: SwipeAnchor.bottom,
                     stackClipBehaviour: Clip.none,
                     onSwipeCompleted: (index, direction) {
                       if (kDebugMode) {
@@ -99,7 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     verticalSwipeThreshold: 0.8,
                     builder: (context, properties) {
                       final itemIndex = properties.index % _honeymoonLocations.length;
-
                       return Stack(
                         children: [
                           ExampleCard(
@@ -125,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Container(
                         // color: Colors.red,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(foregroundColor: Colors.redAccent),
                           onPressed: () {
                             _controller.next(swipeDirection: SwipeDirection.left);
                           },
@@ -140,6 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Container(
                         // color: Colors.green,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(foregroundColor: Colors.green),
                           onPressed: () {
                             _controller.next(swipeDirection: SwipeDirection.right);
                           },
