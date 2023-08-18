@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:honeymoon_flutter/models/honeymoon_location.dart';
 import 'package:honeymoon_flutter/widgets/card_overlay.dart';
 import 'package:honeymoon_flutter/widgets/example_card.dart';
 import 'package:swipable_stack/swipable_stack.dart';
@@ -36,6 +37,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late final SwipableStackController _controller;
+
+  bool cardsAreFinished = false;
 
   void _listenController() => setState(() {});
 
@@ -84,40 +87,54 @@ class _MyHomePageState extends State<MyHomePage> {
                 flex: 8,
                 child: Container(
                   // color: Colors.yellow,
-                  child: SwipableStack(
-                    detectableSwipeDirections: const {
-                      SwipeDirection.right,
-                      SwipeDirection.left,
-                    },
-                    allowVerticalSwipe: false,
-                    controller: _controller,
-                    swipeAnchor: SwipeAnchor.bottom,
-                    stackClipBehaviour: Clip.none,
-                    onSwipeCompleted: (index, direction) {
-                      if (kDebugMode) {
-                        print('$index, $direction');
-                      }
-                    },
-                    horizontalSwipeThreshold: 0.8,
-                    verticalSwipeThreshold: 0.8,
-                    builder: (context, properties) {
-                      final itemIndex = properties.index % _honeymoonLocations.length;
-                      return Stack(
-                        children: [
-                          ExampleCard(
-                            name: _honeymoonLocations[itemIndex].title,
-                            assetPath: _honeymoonLocations[itemIndex].imageUrl,
+                  child: cardsAreFinished
+                      ? Container(
+                          color: Colors.white,
+                          child: Center(
+                            child: Text("NO MORE CARDS TO DISPLAY!"),
                           ),
-                          // more custom overlay possible than with overlayBuilder
-                          if (properties.stackIndex == 0 && properties.direction != null)
-                            CardOverlay(
-                              swipeProgress: properties.swipeProgress,
-                              direction: properties.direction!,
-                            )
-                        ],
-                      );
-                    },
-                  ),
+                        )
+                      : SwipableStack(
+                          detectableSwipeDirections: cardsAreFinished
+                              ? {}
+                              : {
+                                  SwipeDirection.right,
+                                  SwipeDirection.left,
+                                },
+                          allowVerticalSwipe: false,
+                          controller: _controller,
+                          swipeAnchor: SwipeAnchor.bottom,
+                          stackClipBehaviour: Clip.none,
+                          onSwipeCompleted: (index, direction) {
+                            if (kDebugMode) {
+                              print('$index, $direction');
+                            }
+                            if (index == _honeymoonLocations.length - 1) {
+                              print("finished");
+                              cardsAreFinished = true;
+                              setState(() {});
+                            }
+                          },
+                          horizontalSwipeThreshold: 0.8,
+                          verticalSwipeThreshold: 0.8,
+                          builder: (context, properties) {
+                            final itemIndex = properties.index % _honeymoonLocations.length;
+                            return Stack(
+                              children: [
+                                ExampleCard(
+                                  name: _honeymoonLocations[itemIndex].title,
+                                  assetPath: _honeymoonLocations[itemIndex].imageUrl,
+                                ),
+                                // more custom overlay possible than with overlayBuilder
+                                if (properties.stackIndex == 0 && properties.direction != null)
+                                  CardOverlay(
+                                    swipeProgress: properties.swipeProgress,
+                                    direction: properties.direction!,
+                                  )
+                              ],
+                            );
+                          },
+                        ),
                 ),
               ),
               Expanded(
@@ -129,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(foregroundColor: Colors.redAccent),
                           onPressed: () {
-                            _controller.next(swipeDirection: SwipeDirection.left);
+                            if (!cardsAreFinished) _controller.next(swipeDirection: SwipeDirection.left);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -145,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(foregroundColor: Colors.green),
                           onPressed: () {
-                            _controller.next(swipeDirection: SwipeDirection.right);
+                            if (!cardsAreFinished) _controller.next(swipeDirection: SwipeDirection.right);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -163,14 +180,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
-
-class HoneymoonLocation {
-  final String title;
-  final String imageUrl;
-
-  HoneymoonLocation({
-    required this.title,
-    required this.imageUrl,
-  });
 }
