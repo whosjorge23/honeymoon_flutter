@@ -44,17 +44,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<HoneymoonLocation> _honeymoonLocations = [
     HoneymoonLocation(
-        title: "Cape Town 1",
-        imageUrl: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/10/2e/1e/cape-town.jpg?w=2400&h=-1&s=1'),
+      title: "Cape Town 1",
+      imageUrl: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/10/2e/1e/cape-town.jpg?w=2400&h=-1&s=1',
+    ),
     HoneymoonLocation(
-        title: "Cape Town 2",
-        imageUrl:
-            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/30/96/12/cape-to-grape-wine-tours.jpg?w=1200&h=-1&s=1'),
+      title: "Cape Town 2",
+      imageUrl:
+          'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/30/96/12/cape-to-grape-wine-tours.jpg?w=1200&h=-1&s=1',
+    ),
     HoneymoonLocation(
-        title: "Cape Town 3",
-        imageUrl:
-            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/79/ab/1d/saffa-tours.jpg?w=1100&h=-1&s=1'),
+      title: "Cape Town 3",
+      imageUrl: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/79/ab/1d/saffa-tours.jpg?w=1100&h=-1&s=1',
+    ),
+    HoneymoonLocation(
+      title: "Athens",
+      imageUrl: '',
+    ),
+    HoneymoonLocation(
+      title: "Barcelona",
+      imageUrl: '',
+    ),
   ];
+
+  List<HoneymoonLocation> yayArray = [];
+  List<HoneymoonLocation> nayArray = [];
 
   @override
   void initState() {
@@ -107,7 +120,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           stackClipBehaviour: Clip.none,
                           onSwipeCompleted: (index, direction) {
                             if (kDebugMode) {
-                              print('$index, $direction');
+                              print('$index, $direction, ${_honeymoonLocations[index].title}');
+                            }
+                            if (direction == SwipeDirection.right) {
+                              yayArray.add(_honeymoonLocations[index]);
+                            } else {
+                              nayArray.add(_honeymoonLocations[index]);
                             }
                             if (index == _honeymoonLocations.length - 1) {
                               print("finished");
@@ -146,7 +164,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(foregroundColor: Colors.redAccent),
                           onPressed: () {
-                            if (!cardsAreFinished) _controller.next(swipeDirection: SwipeDirection.left);
+                            if (!cardsAreFinished) {
+                              _controller.next(swipeDirection: SwipeDirection.left);
+                            } else {
+                              print(nayArray);
+                            }
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -162,7 +184,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(foregroundColor: Colors.green),
                           onPressed: () {
-                            if (!cardsAreFinished) _controller.next(swipeDirection: SwipeDirection.right);
+                            if (!cardsAreFinished) {
+                              _controller.next(swipeDirection: SwipeDirection.right);
+                            } else {
+                              print(yayArray);
+                            }
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
