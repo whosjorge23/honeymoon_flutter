@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:honeymoon_flutter/details_view.dart';
 import 'package:honeymoon_flutter/models/honeymoon_location.dart';
 import 'package:honeymoon_flutter/widgets/card_overlay.dart';
 import 'package:honeymoon_flutter/widgets/example_card.dart';
@@ -15,13 +17,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Honeymoon Flutter'),
+      routerConfig: GoRouter(
+        routes: [
+          GoRoute(
+            path: '/',
+            pageBuilder: (context, state) => MaterialPage(
+              child: MyHomePage(title: 'Honeymoon Flutter'),
+            ),
+            routes: [
+              GoRoute(
+                path: 'detailPage',
+                pageBuilder: (context, state) {
+                  // Extract the movieId from the route parameters
+                  final selectedArray = state.extra! as List<HoneymoonLocation>;
+                  return MaterialPage(
+                    child: DetailsView(
+                      selectedArray: selectedArray,
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
+        ],
+      ),
+      // home: const MyHomePage(title: 'Honeymoon Flutter'),
     );
   }
 }
@@ -56,14 +82,14 @@ class _MyHomePageState extends State<MyHomePage> {
       title: "Cape Town 3",
       imageUrl: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/79/ab/1d/saffa-tours.jpg?w=1100&h=-1&s=1',
     ),
-    HoneymoonLocation(
-      title: "Athens",
-      imageUrl: '',
-    ),
-    HoneymoonLocation(
-      title: "Barcelona",
-      imageUrl: '',
-    ),
+    // HoneymoonLocation(
+    //   title: "Athens",
+    //   imageUrl: '',
+    // ),
+    // HoneymoonLocation(
+    //   title: "Barcelona",
+    //   imageUrl: '',
+    // ),
   ];
 
   List<HoneymoonLocation> yayArray = [];
@@ -168,6 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               _controller.next(swipeDirection: SwipeDirection.left);
                             } else {
                               print(nayArray);
+                              context.go('/detailPage', extra: nayArray);
                             }
                           },
                           child: Row(
@@ -188,6 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               _controller.next(swipeDirection: SwipeDirection.right);
                             } else {
                               print(yayArray);
+                              context.go('/detailPage', extra: yayArray);
                             }
                           },
                           child: Row(
