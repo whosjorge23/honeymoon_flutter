@@ -24,9 +24,12 @@ class _DetailsViewState extends State<DetailsView> {
           child: ListView.builder(
             itemCount: widget.selectedArray.length,
             itemBuilder: (context, index) {
-              return ExampleCard(
-                name: widget.selectedArray[index].title,
-                assetPath: widget.selectedArray[index].imageUrl,
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ExampleCard(
+                  name: widget.selectedArray[index].title,
+                  assetPath: widget.selectedArray[index].imageUrl,
+                ),
               );
             },
           ),
