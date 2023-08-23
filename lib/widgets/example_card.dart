@@ -5,11 +5,13 @@ class ExampleCard extends StatelessWidget {
   const ExampleCard({
     required this.name,
     required this.assetPath,
+    this.isDetailsView = false,
     super.key,
   });
 
   final String name;
   final String assetPath;
+  final bool isDetailsView;
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +64,14 @@ class ExampleCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (isDetailsView) const SizedBox(height: BottomButtonsRow.height * 1.5),
                 Text(
                   name,
                   style: theme.textTheme.headline6!.copyWith(
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: BottomButtonsRow.height)
+                if (!isDetailsView) const SizedBox(height: BottomButtonsRow.height / 2.5)
               ],
             ),
           ),

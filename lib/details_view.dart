@@ -29,6 +29,7 @@ class _DetailsViewState extends State<DetailsView> {
                 child: ExampleCard(
                   name: widget.selectedArray[index].title,
                   assetPath: widget.selectedArray[index].imageUrl,
+                  isDetailsView: true,
                 ),
               );
             },
