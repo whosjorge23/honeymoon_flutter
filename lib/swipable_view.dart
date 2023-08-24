@@ -138,51 +138,94 @@ class _SwipableViewState extends State<SwipableView> {
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(
-                      child: Container(
-                        // color: Colors.red,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(foregroundColor: Colors.redAccent),
-                          onPressed: () {
-                            if (!cardsAreFinished) {
-                              _controller.next(swipeDirection: SwipeDirection.left);
-                            } else {
-                              print(nayArray);
-                              context.go('/detailPage', extra: nayArray);
-                            }
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [Text("NAY"), SizedBox(width: 5), Icon(Icons.thumb_down_alt_rounded)],
-                          ),
-                        ),
-                      ),
+                    SwipeButton(
+                      cardsAreFinished: cardsAreFinished,
+                      controller: _controller,
+                      sDirection: SwipeDirection.left,
+                      array: nayArray,
+                      color: Colors.redAccent,
+                      icon: Icons.thumb_down_alt_rounded,
+                      text: 'NAY',
                     ),
                     SizedBox(width: 10),
-                    Expanded(
-                      child: Container(
-                        // color: Colors.green,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(foregroundColor: Colors.green),
-                          onPressed: () {
-                            if (!cardsAreFinished) {
-                              _controller.next(swipeDirection: SwipeDirection.right);
-                            } else {
-                              print(yayArray);
-                              context.go('/detailPage', extra: yayArray);
-                            }
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [Text("YAY"), SizedBox(width: 5), Icon(Icons.thumb_up_alt_rounded)],
-                          ),
-                        ),
-                      ),
+                    SwipeButton(
+                      cardsAreFinished: cardsAreFinished,
+                      controller: _controller,
+                      sDirection: SwipeDirection.right,
+                      array: yayArray,
+                      color: Colors.green,
+                      icon: Icons.thumb_up_alt_rounded,
+                      text: 'YAY',
                     ),
+                    // Expanded(
+                    //   child: Container(
+                    //     // color: Colors.green,
+                    //     child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(foregroundColor: Colors.green),
+                    //       onPressed: () {
+                    //         if (!cardsAreFinished) {
+                    //           _controller.next(swipeDirection: SwipeDirection.right);
+                    //         } else {
+                    //           print(yayArray);
+                    //           context.go('/detailPage', extra: yayArray);
+                    //         }
+                    //       },
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: [Text("YAY"), SizedBox(width: 5), Icon(Icons.thumb_up_alt_rounded)],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SwipeButton extends StatelessWidget {
+  const SwipeButton(
+      {super.key,
+      required this.cardsAreFinished,
+      required SwipableStackController controller,
+      required this.array,
+      required this.color,
+      required this.icon,
+      required this.text,
+      required this.sDirection})
+      : _controller = controller;
+
+  final bool cardsAreFinished;
+  final SwipableStackController _controller;
+  final List<HoneymoonLocation> array;
+  final Color color;
+  final IconData icon;
+  final String text;
+  final SwipeDirection sDirection;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        // color: Colors.red,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(foregroundColor: color),
+          onPressed: () {
+            if (!cardsAreFinished) {
+              _controller.next(swipeDirection: sDirection);
+            } else {
+              print(array);
+              context.go('/detailPage', extra: array);
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Text(text), SizedBox(width: 5), Icon(icon)],
           ),
         ),
       ),
