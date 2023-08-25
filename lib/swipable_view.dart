@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:honeymoon_flutter/models/honeymoon_location.dart';
 import 'package:honeymoon_flutter/widgets/card_overlay.dart';
 import 'package:honeymoon_flutter/widgets/example_card.dart';
+import 'package:honeymoon_flutter/widgets/swipe_button.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 class SwipableView extends StatefulWidget {
@@ -157,26 +158,6 @@ class _SwipableViewState extends State<SwipableView> {
                       icon: Icons.thumb_up_alt_rounded,
                       text: 'YAY',
                     ),
-                    // Expanded(
-                    //   child: Container(
-                    //     // color: Colors.green,
-                    //     child: ElevatedButton(
-                    //       style: ElevatedButton.styleFrom(foregroundColor: Colors.green),
-                    //       onPressed: () {
-                    //         if (!cardsAreFinished) {
-                    //           _controller.next(swipeDirection: SwipeDirection.right);
-                    //         } else {
-                    //           print(yayArray);
-                    //           context.go('/detailPage', extra: yayArray);
-                    //         }
-                    //       },
-                    //       child: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.center,
-                    //         children: [Text("YAY"), SizedBox(width: 5), Icon(Icons.thumb_up_alt_rounded)],
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -188,47 +169,23 @@ class _SwipableViewState extends State<SwipableView> {
   }
 }
 
-class SwipeButton extends StatelessWidget {
-  const SwipeButton(
-      {super.key,
-      required this.cardsAreFinished,
-      required SwipableStackController controller,
-      required this.array,
-      required this.color,
-      required this.icon,
-      required this.text,
-      required this.sDirection})
-      : _controller = controller;
-
-  final bool cardsAreFinished;
-  final SwipableStackController _controller;
-  final List<HoneymoonLocation> array;
-  final Color color;
-  final IconData icon;
-  final String text;
-  final SwipeDirection sDirection;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        // color: Colors.red,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(foregroundColor: color),
-          onPressed: () {
-            if (!cardsAreFinished) {
-              _controller.next(swipeDirection: sDirection);
-            } else {
-              print(array);
-              context.go('/detailPage', extra: array);
-            }
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text(text), SizedBox(width: 5), Icon(icon)],
-          ),
-        ),
-      ),
-    );
-  }
-}
+// Expanded(
+//   child: Container(
+//     // color: Colors.green,
+//     child: ElevatedButton(
+//       style: ElevatedButton.styleFrom(foregroundColor: Colors.green),
+//       onPressed: () {
+//         if (!cardsAreFinished) {
+//           _controller.next(swipeDirection: SwipeDirection.right);
+//         } else {
+//           print(yayArray);
+//           context.go('/detailPage', extra: yayArray);
+//         }
+//       },
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [Text("YAY"), SizedBox(width: 5), Icon(Icons.thumb_up_alt_rounded)],
+//       ),
+//     ),
+//   ),
+// ),
