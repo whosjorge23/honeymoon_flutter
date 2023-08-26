@@ -26,10 +26,15 @@ class _DetailsViewState extends State<DetailsView> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ExampleCard(
-                  name: widget.selectedArray[index].title,
-                  assetPath: widget.selectedArray[index].imageUrl,
-                  isDetailsView: true,
+                child: GestureDetector(
+                  onTap: () {
+                    print(widget.selectedArray[index].title);
+                  },
+                  child: ExampleCard(
+                    name: widget.selectedArray[index].title,
+                    assetPath: widget.selectedArray[index].imageUrl,
+                    isDetailsView: true,
+                  ),
                 ),
               );
             },
