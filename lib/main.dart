@@ -41,20 +41,18 @@ class MyApp extends StatelessWidget {
                     ),
                   );
                 },
-                routes: [
-                  GoRoute(
-                    path: 'detailCardPage',
-                    pageBuilder: (context, state) {
-                      // Extract the movieId from the route parameters
-                      final selectedElement = state.extra! as HoneymoonLocation;
-                      return MaterialPage(
-                        child: CardDetails(
-                          selectedLocation: selectedElement,
-                        ),
-                      );
-                    },
-                  )
-                ],
+              ),
+              GoRoute(
+                path: 'detailCardPage',
+                pageBuilder: (context, state) {
+                  // Extract the movieId from the route parameters
+                  final selectedElement = state.extra! as HoneymoonLocation;
+                  return MaterialPage(
+                    child: CardDetails(
+                      selectedLocation: selectedElement,
+                    ),
+                  );
+                },
               )
             ],
           ),
