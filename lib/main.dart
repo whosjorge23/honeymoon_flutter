@@ -4,6 +4,8 @@ import 'package:honeymoon_flutter/details_view.dart';
 import 'package:honeymoon_flutter/models/honeymoon_location.dart';
 import 'package:honeymoon_flutter/swipable_view.dart';
 
+import 'card_details.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -39,6 +41,20 @@ class MyApp extends StatelessWidget {
                     ),
                   );
                 },
+                routes: [
+                  GoRoute(
+                    path: 'detailCardPage',
+                    pageBuilder: (context, state) {
+                      // Extract the movieId from the route parameters
+                      final selectedElement = state.extra! as HoneymoonLocation;
+                      return MaterialPage(
+                        child: CardDetails(
+                          selectedLocation: selectedElement,
+                        ),
+                      );
+                    },
+                  )
+                ],
               )
             ],
           ),

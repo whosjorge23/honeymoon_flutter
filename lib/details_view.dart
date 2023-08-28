@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:honeymoon_flutter/models/honeymoon_location.dart';
 import 'package:honeymoon_flutter/widgets/example_card.dart';
 
@@ -29,6 +30,7 @@ class _DetailsViewState extends State<DetailsView> {
                 child: GestureDetector(
                   onTap: () {
                     print(widget.selectedArray[index].title);
+                    context.go('/detailCardPage', extra: widget.selectedArray[index]);
                   },
                   child: ExampleCard(
                     name: widget.selectedArray[index].title,
