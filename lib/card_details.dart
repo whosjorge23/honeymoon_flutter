@@ -30,7 +30,11 @@ class _CardDetailsState extends State<CardDetails> {
               widget.selectedLocation.content,
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
-            ElevatedButton(onPressed: () {}, child: Text("Booking Now")),
+            ElevatedButton(
+                onPressed: () {
+                  //Open a web link to book the honeymoon
+                },
+                child: Text("Booking Now")),
           ],
         ),
       ),
